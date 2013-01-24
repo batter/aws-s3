@@ -189,6 +189,18 @@ module AWS
           end
         end
         
+        # Makes a copy of an object from one bucket to another
+        def copy_to(key, bucket, copy_key, copy_bucket = nil, options = {})
+          copy_bucket     = bucket_name(copy_bucket)
+          return copy(key, copy_key, bucket) if bucket == copy_bucket
+          source_key      = path!(bucket, key)
+          default_options = {'x-amz-copy-source' => source_key}
+          target_key      = path!(copy_bucket, copy_key)
+          returning put(target_key, default_options.merge(options)) do
+            acl(copy_key, bucket, acl(key, copy_bucket)) if options[:copy_acl]
+          end
+        end
+        
         # Rename the object with key <tt>from</tt> to have key in <tt>to</tt>.
         def rename(from, to, bucket = nil, options = {})
           copy(from, to, bucket, options)
