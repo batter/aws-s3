@@ -192,7 +192,7 @@ module AWS
         # Makes a copy of an object from one bucket to another
         def copy_to(key, bucket, copy_key, copy_bucket = nil, options = {})
           copy_bucket     = bucket_name(copy_bucket)
-          return copy(key, copy_key, bucket) if bucket == copy_bucket
+          return copy(key, copy_key, bucket, options) if bucket == copy_bucket
           source_key      = path!(bucket, key)
           default_options = {'x-amz-copy-source' => source_key}
           target_key      = path!(copy_bucket, copy_key)
