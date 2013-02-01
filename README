@@ -183,6 +183,9 @@ Other functionality includes:
   # Deleting an object
   S3Object.delete 'headshot.jpg', 'photos'
 
+  # Copying an object from one bucket to another
+  S3Object.copy_to 'headshot.jpg', 'original_bucket', 'headshot.jpg', 'new_bucket'
+
 ==== More about objects and their metadata
 
 You can find out the content type of your object with the <tt>content_type</tt> method:
